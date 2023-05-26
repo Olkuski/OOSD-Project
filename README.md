@@ -10,4 +10,5 @@ The longer the player stays alive, the higher the score
 Collaborators
 
 Eimear Creaney- The start and the end screens of the game
+
 Hubert Olkuski- The main game
