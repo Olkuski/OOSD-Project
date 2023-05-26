@@ -7,24 +7,27 @@ class Avatar
 public:
     int wide = 30;
     int high = 60;
+    sf::Sprite avatarSprite;
+    sf::Texture avatarTexture;
+
+    Avatar()
+    {
+        if (!avatarTexture.loadFromFile("rocket.png"))
+        {
+            // Handle error if the texture fails to load
+        }
+        avatarSprite.setTexture(avatarTexture);
+    }
 
     void display(sf::RenderWindow &window)
     {
-        sf::RectangleShape avatarShape(sf::Vector2f(wide, high));
-        avatarShape.setOrigin(wide / 2, high / 2);
-        avatarShape.setPosition(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
-        avatarShape.setFillColor(sf::Color(255, 0, 0));
-        window.draw(avatarShape);
-
-        sf::ConvexShape rocketShape;
-        rocketShape.setPointCount(4);
-        rocketShape.setPoint(0, sf::Vector2f(-20, -30));
-        rocketShape.setPoint(1, sf::Vector2f(0, -60));
-        rocketShape.setPoint(2, sf::Vector2f(20, -30));
-        rocketShape.setPoint(3, sf::Vector2f(0, 0));
-        rocketShape.setPosition(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
-        rocketShape.setFillColor(sf::Color(255, 0, 0));
-        window.draw(rocketShape);
+        sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+        sf::Vector2u textureSize = avatarTexture.getSize();
+        sf::Vector2f spritePosition(
+            mousePosition.x - textureSize.x / 2,
+            mousePosition.y - textureSize.y / 2);
+        avatarSprite.setPosition(spritePosition);
+        window.draw(avatarSprite);
     }
 };
 
@@ -53,7 +56,7 @@ public:
 
     void move()
     {
-        y = y + 0.1; /* - (size / 10) + (score / 5);*/
+        y = y + 0.1;
         if (x > 500 || y > 500)
         {
             spawn();
